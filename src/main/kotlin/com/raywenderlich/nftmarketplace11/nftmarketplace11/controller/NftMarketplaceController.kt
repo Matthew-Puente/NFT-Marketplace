@@ -48,14 +48,10 @@ class NftmarketplaceController {
         }
         return nft ?: throw NFTNotFoundException()
     }
-    @DeleteMapping
-    fun deleteNFT(@PathVariable id: Int): NFT{
+    @DeleteMapping("/{id}")
+    fun deleteNFT(@PathVariable id: Int){
         var nft = NFTs.firstOrNull{it.id == id}
-        val newNft = NFT(id = -1, name = "", floor_price = 0.0)
-        if (nft != null) {
-            nft = newNft
-        }
-        return nft ?: throw NFTNotFoundException()
+        NFTs.remove(nft)
     }
 
     @Value("\${company_name}")
