@@ -12,6 +12,7 @@ import org.springframework.http.MediaType
 import org.springframework.test.web.servlet.MockMvc
 import org.springframework.test.web.servlet.get
 import org.springframework.test.web.servlet.post
+import org.springframework.test.web.servlet.put
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -59,5 +60,19 @@ class NftMarketplaceApplicationTests(
 			}
 	}
 
+	@Test
+	fun `Assert that we can change an NFT`(){
+		val oldNftOne = NFT(5, "Loot", 45.3)
+		mockMvc.put("/nfts/5",){
+			contentType = MediaType.APPLICATION_JSON
+			content = objectMapper.writeValueAsString(oldNftOne)}
+			.andExpect {
+				status { isOk() }
+				jsonPath("$.name") { value("Loot") }
+				jsonPath("$.floor_price") { value(45.3) }
+				jsonPath("$.id") { value(5) }
+			}
+
+	}
 
 }

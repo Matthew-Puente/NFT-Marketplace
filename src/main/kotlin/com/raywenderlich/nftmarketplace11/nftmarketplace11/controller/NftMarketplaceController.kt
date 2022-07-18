@@ -4,6 +4,7 @@ import com.raywenderlich.nftmarketplace11.nftmarketplace11.exception.NFTNotFound
 import com.raywenderlich.nftmarketplace11.nftmarketplace11.model.NFT
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpStatus
+import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController // 1
@@ -37,6 +38,26 @@ class NftmarketplaceController {
         val nft = NFTs.firstOrNull { it.id == id }
         return nft ?: throw NFTNotFoundException()
     }
+
+    @PutMapping("/{id}")
+    fun changeNFTByID(@PathVariable id:Int, @RequestBody nftDefinition:NFT): NFT {
+        var nft: NFT? = NFTs.firstOrNull{it.id == id}
+        val newNft = NFT(id = nftDefinition.id, name = nftDefinition.name, floor_price = nftDefinition.floor_price)
+        if (nft != null) {
+            nft = newNft
+        }
+        return nft ?: throw NFTNotFoundException()
+    }
+    @DeleteMapping
+    fun deleteNFT(@PathVariable id: Int): NFT{
+        var nft = NFTs.firstOrNull{it.id == id}
+        val newNft = NFT(id = -1, name = "", floor_price = 0.0)
+        if (nft != null) {
+            nft = newNft
+        }
+        return nft ?: throw NFTNotFoundException()
+    }
+
     @Value("\${company_name}")
     private lateinit var name: String
 
