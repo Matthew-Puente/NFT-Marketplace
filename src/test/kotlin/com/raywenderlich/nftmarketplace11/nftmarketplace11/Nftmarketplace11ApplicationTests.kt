@@ -60,7 +60,7 @@ class NftMarketplaceApplicationTests(
 				content { contentType(MediaType.APPLICATION_JSON) }
 				jsonPath("$.name") { value("Loot") }
 				jsonPath("$.floor_price") { value(45.3) }
-				jsonPath("$.id") { value(8000) }
+				jsonPath("$.id") { value(6) }
 			}
 	}
 
