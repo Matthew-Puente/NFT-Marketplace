@@ -60,7 +60,7 @@ class NftMarketplaceApplicationTests(
 				content { contentType(MediaType.APPLICATION_JSON) }
 				jsonPath("$.name") { value("Loot") }
 				jsonPath("$.floor_price") { value(45.3) }
-				jsonPath("$.id") { value(6) }
+				jsonPath("$.id") { value(8000) }
 			}
 	}
 
@@ -68,7 +68,7 @@ class NftMarketplaceApplicationTests(
 		@Order(3)
 	fun `Assert that we can change an NFT`(){
 		val oldNftOne = NFT(5, "Loot", 45.3)
-		mockMvc.put("/nfts/5",){
+		mockMvc.put("/nfts/5"){
 			contentType = MediaType.APPLICATION_JSON
 			content = objectMapper.writeValueAsString(oldNftOne)}
 			.andExpect {
