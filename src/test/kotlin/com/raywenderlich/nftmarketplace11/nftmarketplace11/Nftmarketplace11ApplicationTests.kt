@@ -5,6 +5,9 @@ import org.springframework.boot.test.context.SpringBootTest
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.raywenderlich.nftmarketplace11.nftmarketplace11.model.NFT
+import org.junit.jupiter.api.MethodOrderer
+import org.junit.jupiter.api.Order
+import org.junit.jupiter.api.TestMethodOrder
 import org.mockito.internal.matchers.GreaterThan
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc
@@ -13,11 +16,13 @@ import org.springframework.test.web.servlet.*
 
 @SpringBootTest
 @AutoConfigureMockMvc
+@TestMethodOrder(MethodOrderer.OrderAnnotation::class)
 class NftMarketplaceApplicationTests(
 	@Autowired val mockMvc: MockMvc,
 	@Autowired val objectMapper: ObjectMapper
 ) {
 	@Test
+		@Order(1)
 	fun `Assert NFTs has CryptoPunks as the first item`() {
 		mockMvc.get("/nfts") // 1
 			.andExpect { // 2
@@ -29,7 +34,9 @@ class NftMarketplaceApplicationTests(
 				jsonPath("$.length()") { GreaterThan(1) }
 			}
 	}
+
 	@Test
+		@Order(2)
 	fun `Assert that we can create an NFT`() {
 		mockMvc.get("/nfts/6")
 			.andExpect {
@@ -58,6 +65,7 @@ class NftMarketplaceApplicationTests(
 	}
 
 	@Test
+		@Order(3)
 	fun `Assert that we can change an NFT`(){
 		val oldNftOne = NFT(5, "Loot", 45.3)
 		mockMvc.put("/nfts/5",){
@@ -73,6 +81,7 @@ class NftMarketplaceApplicationTests(
 	}
 
 	@Test
+		@Order(4)
 	fun `Assert that we can delete an NFT`(){
 		mockMvc.delete("/nfts/5")
 		mockMvc.get("/nfts/5")
