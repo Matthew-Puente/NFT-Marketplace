@@ -26,6 +26,8 @@ dependencies {
 	implementation("org.springdoc:springdoc-openapi-core:1.1.49")
 	implementation("org.springdoc:springdoc-openapi-ui:1.6.4")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	implementation("org.projectlombok:lombok:1.18.24")
+	implementation("org.projectlombok:lombok:1.18.24")
 
 }
 

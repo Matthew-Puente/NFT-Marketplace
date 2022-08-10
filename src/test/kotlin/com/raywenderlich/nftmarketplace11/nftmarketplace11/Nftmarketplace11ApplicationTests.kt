@@ -83,7 +83,12 @@ class NftMarketplaceApplicationTests(
 	@Test
 		@Order(4)
 	fun `Assert that we can delete an NFT`(){
-		mockMvc.delete("/nfts/5")
+		mockMvc.delete("/nfts/5").andExpect{
+			status { isOk() }
+			jsonPath("$.name") { value("Pudgy Penguins") }
+			jsonPath("$.floor_price") { value(2.5) }
+			jsonPath("$.id") { value(5) }
+		}
 		mockMvc.get("/nfts/5")
 			.andExpect {
 				status { isNotFound() }
